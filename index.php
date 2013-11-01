@@ -4,7 +4,6 @@ function checkSignature()
   $signature = $_GET["signature"];
   $timestamp = $_GET["timestamp"];
   $nonce = $_GET["nonce"];
-  //var_dump($signature);
 
   $token = "leovim";
   $tmpArr = array($token, $timestamp, $nonce);
@@ -19,8 +18,4 @@ function checkSignature()
     return false;
   }
 }
-if (checkSignature()) 
-  echo $_GET['echostr'];
-else
-  die();
 ?>
