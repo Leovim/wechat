@@ -1,21 +1,36 @@
 <?php
-function checkSignature()
+define("TOKEN", "leovim");
+$wechatObj = new wechatCallbackApiTest();
+$wechatObj->valid();
+
+class wechatCallbackApiTest
 {
-  $signature = $_GET["signature"];
-  $timestamp = $_GET["timestamp"];
-  $nonce = $_GET["nonce"];
-
-  $token = "leovim";
-  $tmpArr = array($token, $timestamp, $nonce);
-  sort($tmpArr);
-  $tmpStr = implode($tmpArr);
-  $tmpStr = sha1($tmpStr);
-
-  if ($tmpStr == $signature) {
-    return true;
+  public function valid()
+  {
+    $echoStr = $_GET["echostr"];
+    if ($this->checkSignature()) {
+      echo $echoStr;
+      exit;
+    }
   }
-  else {
-    return false;
+  private function checkSignature()
+  {
+    $signature = $_GET["signature"];
+    $timestamp = $_GET["timestamp"];
+    $nonce = $_GET["nonce"];
+
+    $token = TOKEN;
+    $tmpArr = array($token, $timestamp, $nonce);
+    sort($tmpArr);
+    $tmpStr = implode($tmpArr);
+    $tmpStr = sha1($tmpStr);
+
+    if ($tmpStr == $signature) {
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 }
 ?>
